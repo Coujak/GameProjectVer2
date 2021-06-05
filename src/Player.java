@@ -6,6 +6,7 @@ public class Player extends GameObject {
 
     private ImageIcon playerImagePath = new ImageIcon(getClass().getResource("player.png"));
     private Image playerImage = playerImagePath.getImage();
+
     private int playerWidth = playerImagePath.getIconWidth();
     private int playerHeight = playerImagePath.getIconHeight();
     private int playerHealth = 3, velocity_X = 0, velocity_Y = 0;
@@ -15,7 +16,7 @@ public class Player extends GameObject {
     }
 
     public void movement() {
-        checkBorderCollision();
+        checkCollision();
         position_X+=velocity_X;
         position_Y+=velocity_Y;
 
@@ -26,12 +27,12 @@ public class Player extends GameObject {
 
     }
 
-    public void checkBorderCollision() {
+    public void checkCollision() {
         if (position_X + velocity_X < 0) {
             velocity_X = 0;
-            position_Y = 0;
+            position_X = 0;
         }
-        else if (position_X + velocity_Y < 0) {
+        else if (position_Y + velocity_Y < 0) {
             velocity_Y = 0;
             position_Y = 0;
         }
@@ -48,18 +49,17 @@ public class Player extends GameObject {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_UP: case KeyEvent.VK_W:
-                velocity_Y = -5;
+                velocity_Y = -10;
                 break;
             case KeyEvent.VK_DOWN: case KeyEvent.VK_S:
-                velocity_Y = 5;
+                velocity_Y = 10;
                 break;
             case KeyEvent.VK_LEFT: case KeyEvent.VK_A:
-                velocity_X = -5;
+                velocity_X = -10;
                 break;
             case KeyEvent.VK_RIGHT: case KeyEvent.VK_D:
-                velocity_X = 5;
+                velocity_X = 10;
                 break;
-
         }
     }
 
@@ -79,7 +79,7 @@ public class Player extends GameObject {
 
     public void paint(Graphics graphics) {
         graphics.drawImage(playerImage, position_X, position_Y, playerWidth, playerHeight, null);
-        graphics.drawRect(position_X, position_Y, playerWidth,playerHeight);
+        //graphics.drawRect(position_X, position_Y, playerWidth,playerHeight);
 
         ImageIcon imagePath = new ImageIcon(getClass().getResource("hearts.png"));
         Image heartsImage = imagePath.getImage();
@@ -92,16 +92,8 @@ public class Player extends GameObject {
         return playerWidth;
     }
 
-    public void setPlayerWidth(int playerWidth) {
-        this.playerWidth = playerWidth;
-    }
-
     public int getPlayerHeight() {
         return playerHeight;
-    }
-
-    public void setPlayerHeight(int playerHeight) {
-        this.playerHeight = playerHeight;
     }
 
     public int getPlayerHealth() {

@@ -5,14 +5,17 @@ import java.awt.event.KeyListener;
 
 public class GameWindow extends JPanel implements KeyListener {
     private Player player;
-    private ArrayOfEnemies enemyArray;
+    private EnemyArray enemyArray;
+    private BulletArray bulletArray;
+
 
     private int score = 0, maxEnemies = 1;
 
     public GameWindow() {
         JFrame gameFrame = new JFrame("Shooting Game");
-        this.player = new Player(Dimensions.PLAYER_X , Dimensions.PLAYER_Y);
-        enemyArray = new ArrayOfEnemies(player, maxEnemies);
+        player = new Player(Dimensions.PLAYER_X , Dimensions.PLAYER_Y);
+        enemyArray = new EnemyArray(player, maxEnemies);
+        bulletArray = new BulletArray();
         gameFrame.setSize(Dimensions.WINDOW_WIDTH, Dimensions.WINDOW_HEIGHT);
         gameFrame.setLocationRelativeTo(null);
         gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,13 +29,15 @@ public class GameWindow extends JPanel implements KeyListener {
     public void gameThread() {
         new Thread(() -> {
             while (true) {
-                if (score/1000 > maxEnemies) {
-                    maxEnemies++;
+
+                if (score/300 > maxEnemies) {
+                    enemyArray.setMaxEnemies(++maxEnemies);
                 }
+                checkCollision();
                 player.movement();
                 enemyArray.createEnemies();
                 enemyArray.moveEnemy();
-                enemyArray.checkCollision();
+                bulletArray.move();
                 repaint();
 
                 try {
@@ -43,6 +48,17 @@ public class GameWindow extends JPanel implements KeyListener {
             }
         }).start();
     }
+
+    public void checkCollision() {
+        for (int i = 0; i < bulletArray.getBulletArray().size(); i++) {
+            if (enemyArray.checkBulletCollision(bulletArray.getBulletArray().get(i))) {
+                bulletArray.getBulletArray().remove(i);
+                score+=100;
+            }
+        }
+    }
+
+
 
     public static void main(String[] args) {
         new GameWindow();
@@ -57,6 +73,7 @@ public class GameWindow extends JPanel implements KeyListener {
 
         this.player.paint(graphics);
         this.enemyArray.paint(graphics);
+        this.bulletArray.paint(graphics);
 
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font("Arial", Font.BOLD, 20));
@@ -72,12 +89,14 @@ public class GameWindow extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         player.keyPressed(e);
-        keyPress++;
+
+        if (e.getKeyCode() == KeyEvent.VK_SPACE)
+          if (bulletArray.getBulletArray().size() < bulletArray.getMaxBullets())
+                bulletArray.addBullet(new Bullet(player.position_X+player.getPlayerWidth()/2, player.position_Y));
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         player.keyReleased(e);
-        keyPress=0;
     }
 }

@@ -2,7 +2,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ArrayOfEnemies {
+public class EnemyArray {
 
     private ArrayList<Enemy> enemyArray = new ArrayList<>();
     private Enemy enemy;
@@ -11,7 +11,7 @@ public class ArrayOfEnemies {
     private int maxEnemies;
     private Random random = new Random();
 
-    public ArrayOfEnemies(Player player, int maxEnemies) {
+    public EnemyArray(Player player, int maxEnemies) {
         this.player = player;
         this.maxEnemies = maxEnemies;
     }
@@ -28,12 +28,13 @@ public class ArrayOfEnemies {
             enemy = enemyArray.get(i);
             enemy.move();
         }
+        checkPlayerCollision();
     }
 
-    public void checkCollision() {
-        for (int i=0; i < enemyArray.size(); i++) {
+    public void checkPlayerCollision() {
+        for (int i = 0; i < enemyArray.size(); i++) {
             enemy = enemyArray.get(i);
-            if(enemy.position_Y >= Dimensions.WINDOW_HEIGHT - enemy.getEnemyHeight() - 30) {
+            if (enemy.position_Y >= Dimensions.WINDOW_HEIGHT - enemy.getEnemyHeight() - 30) {
                 player.setPlayerHealth(player.getPlayerHealth() - 1);
                 enemyArray.remove(i);
                 if (player.getPlayerHealth() > 0)
@@ -41,12 +42,23 @@ public class ArrayOfEnemies {
             }
 
             if (enemy.getBounds(enemy.getEnemyWidth(), enemy.getEnemyHeight()).intersects(player.getBounds(player.getPlayerWidth(), player.getPlayerHeight()))) {
-                player.setPlayerHealth(player.getPlayerHealth()-1);
+                player.setPlayerHealth(player.getPlayerHealth() - 1);
                 enemyArray.remove(i);
                 if (player.getPlayerHealth() > 0)
-                    enemyArray.add(new Enemy(random.nextInt(Dimensions.WINDOW_WIDTH-75), 0));
+                    enemyArray.add(new Enemy(random.nextInt(Dimensions.WINDOW_WIDTH - 75), 0));
             }
         }
+    }
+
+    public boolean checkBulletCollision(Bullet bullet) {
+        for (int i=0; i < enemyArray.size(); i++) {
+            enemy = enemyArray.get(i);
+            if (enemy.getBounds(enemy.getEnemyWidth(), enemy.getEnemyHeight()).intersects(bullet.getBounds(bullet.getBulletWidth(), bullet.getBulletHeight()))) {
+                enemyArray.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     public void paint(Graphics graphics) {
@@ -54,5 +66,13 @@ public class ArrayOfEnemies {
             enemy = enemyArray.get(i);
             enemy.paint(graphics);
         }
+    }
+
+    public ArrayList<Enemy> getEnemyArray() {
+        return enemyArray;
+    }
+
+    public void setMaxEnemies(int maxEnemies) {
+        this.maxEnemies = maxEnemies;
     }
 }
