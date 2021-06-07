@@ -68,10 +68,6 @@ public class EnemyArray {
         }
     }
 
-    public ArrayList<Enemy> getEnemyArray() {
-        return enemyArray;
-    }
-
     public void setMaxEnemies(int maxEnemies) {
         this.maxEnemies = maxEnemies;
     }

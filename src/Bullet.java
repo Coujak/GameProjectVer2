@@ -25,17 +25,8 @@ public class Bullet extends GameObject {
         return bulletWidth;
     }
 
-    public void setBulletWidth(int bulletWidth) {
-        this.bulletWidth = bulletWidth;
-    }
-
     public int getBulletHeight() {
         return bulletHeight;
     }
-
-    public void setBulletHeight(int bulletHeight) {
-        this.bulletHeight = bulletHeight;
-    }
-
 
 }

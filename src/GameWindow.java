@@ -58,8 +58,6 @@ public class GameWindow extends JPanel implements KeyListener {
         }
     }
 
-
-
     public static void main(String[] args) {
         new GameWindow();
     }
@@ -80,7 +78,6 @@ public class GameWindow extends JPanel implements KeyListener {
         graphics.drawString("Score: "+score, Dimensions.WINDOW_WIDTH-150, 30);
     }
 
-    int keyPress = 0; // to shot only twice instead of no end
     @Override
     public void keyTyped(KeyEvent e) {
 

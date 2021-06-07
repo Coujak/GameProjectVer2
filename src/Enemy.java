@@ -27,15 +27,7 @@ public class Enemy extends GameObject {
         return enemyWidth;
     }
 
-    public void setEnemyWidth(int enemyWidth) {
-        this.enemyWidth = enemyWidth;
-    }
-
     public int getEnemyHeight() {
         return enemyHeight;
-    }
-
-    public void setEnemyHeight(int enemyHeight) {
-        this.enemyHeight = enemyHeight;
     }
 }
