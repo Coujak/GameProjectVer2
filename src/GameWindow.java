@@ -15,7 +15,6 @@ public class GameWindow extends JPanel implements KeyListener, MouseListener {
 
     public GameWindow() {
         JFrame gameFrame = new JFrame("Shooting Game");
-
         player = new Player(Dimensions.PLAYER_X , Dimensions.PLAYER_Y);
         enemyArray = new EnemyArray(player, maxEnemies);
         bulletArray = new BulletArray();
