@@ -16,7 +16,6 @@ public class Bullet extends GameObject {
         position_Y -= 20;
     }
 
-
     public void paint(Graphics graphics) {
         graphics.drawImage(bulletImage, position_X, position_Y, null);
     }
@@ -36,6 +35,5 @@ public class Bullet extends GameObject {
     public void setBulletHeight(int bulletHeight) {
         this.bulletHeight = bulletHeight;
     }
-
 
 }

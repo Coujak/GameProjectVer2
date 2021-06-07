@@ -18,9 +18,7 @@ public class Enemy extends GameObject {
     }
 
     public void paint(Graphics graphics) {
-        graphics.drawImage(enemyImage, position_X, position_Y , enemyWidth, enemyHeight, null);
-        //graphics.drawRect(position_X, position_Y, enemyWidth, enemyHeight);
-
+        graphics.drawImage(enemyImage, position_X, position_Y, enemyWidth, enemyHeight, null);
     }
 
     public int getEnemyWidth() {
