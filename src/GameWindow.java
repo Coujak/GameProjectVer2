@@ -10,7 +10,6 @@ public class GameWindow extends JPanel implements KeyListener, MouseListener {
     private EnemyArray enemyArray;
     private BulletArray bulletArray;
 
-
     private int score = 0, maxEnemies = 1;
 
     public GameWindow() {
